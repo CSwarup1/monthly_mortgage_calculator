@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #312e2e;
+        }
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            padding: 80px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #312d2d;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #560da5e6;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #b6b5b2;
+            border-radius: 4px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #d3340c;
+            border: none;
+            border-radius: 5px;
+            color: #faf6f6;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #171819;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #373636;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Monthly Mortgage Calculator</h1>
+        <div class="form-group">
+            <label for="loanAmt">LOAN AMOUNT </label>
+            <input type="number" id="loanAmt" placeholder="Enter loan amount here " required>
+        </div>
+        <div class="form-group">
+            <label for="annualRt">ANNUAL INTEREST RATE</label>
+            <input type="number" id="annualRt" step="0.01" placeholder="Enter annual interest rate here" required>
+        </div>
+        <div class="form-group">
+            <label for="lTerm">LOAN TERM IN YEARS:</label>
+            <input type="number" id="lTerm" placeholder="Enter loan term in years here" required>
+        </div>
+        <div class="form-group">
+            <button onclick="calcMortgage()">Calculate the Monthly Payment</button>
+        </div>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function calcMortgage() {
+           
+            const loanAmt = parseFloat(document.getElementById('loanAmt').value);
+            const annualRt = parseFloat(document.getElementById('annualRt').value);
+            const lTerm = parseInt(document.getElementById('lTerm').value);
+
+            
+            if (isNaN(loanAmt) || isNaN(annualRt) || isNaN(lTerm) || loanAmt <= 0 || annualRt <= 0 || lTerm <= 0) {
+                document.getElementById('result').innerHTML = 'wait.';
+                return;
+            }
+
+            
+            const monthlyRate = (annualRt / 100) / 12;
+            const totalPayments = lTerm * 12;
+
+            const monthlyPayment = (loanAmt * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -totalPayments));
+
+         
+            document.getElementById('result').innerHTML = `Your monthly payment is: ${monthlyPayment.toFixed(2)*80}`;
+        }
+    </script>
+</body>
+</html>
